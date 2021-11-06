@@ -1,14 +1,19 @@
 package by.bsuir.entity;
 
-public class Fridge extends Product{
+public class Oven extends Product{
     private int height;
     private int width;
     private int length;
 
-    public Fridge(int price, String name, String color, int height, int width) {
-        super(price, name, color);
+    public Oven(int price, String name, int height, int width) {
+        super(price, name);
         this.height = height;
         this.width = width;
+    }
+
+    @Override
+    public Types GetType(){
+        return Types.Oven;
     }
 
     int getWidth(){

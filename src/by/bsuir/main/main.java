@@ -1,43 +1,58 @@
 package by.bsuir.main;
 
-public class Main {
+import by.bsuir.dao.DAOProduct;
+import by.bsuir.entity.Kettle;
+import by.bsuir.entity.Product;
 
-    public static void main(String[] args) {
-        Appliance appliance;
+import java.util.ArrayList;
 
-        ServiceFactory factory = ServiceFactory.getInstance();
-        ApplianceService service = factory.getApplianceService();
+public class main {
 
-        //////////////////////////////////////////////////////////////////
+    public static class FindKettles implements DAOProduct.CriteriaFunc {
+        private ArrayList<Kettle> prList = new ArrayList<Kettle>();
 
-        Criteria criteriaOven = new Criteria(Oven.class.getSimpleName());//"Oven"
-        criteriaOven.add(Oven.CAPACITY.toString(), 3);
+        @Override
+        public void ProcessProduct(Product product){
+            if(product.GetType() == Product.Types.Kettle)
+            {
+                prList.add((Kettle) product);
+            }
+        }
 
-        appliance = service.find(criteriaOven);
-
-        PrintApplianceInfo.print(appliance);
-
-        //////////////////////////////////////////////////////////////////
-
-        criteriaOven = new Criteria(Oven.class.getSimpleName());
-        criteriaOven.add(Oven.HEIGHT.toString(), 200);
-        criteriaOven.add(Oven.DEPTH.toString(), 300);
-
-        appliance = service.find(criteriaOven);
-
-        PrintApplianceInfo.print(appliance);
-
-        //////////////////////////////////////////////////////////////////
-
-        Criteria criteriaTabletPC = new Criteria(TabletPC.class.getSimpleName());
-        criteriaTabletPC.add(TabletPC.COLOR.toString(), "BLUE");
-        criteriaTabletPC.add(TabletPC.DISPLAY_INCHES.toString(), 14);
-        criteriaTabletPC.add(TabletPC.MEMORY_ROM.toString(), 4);
-
-        appliance = service.find(criteriaOven);// find(Object...obj)
-
-        PrintApplianceInfo.print(appliance);
-
+        public ArrayList<Kettle> GetResult(){
+            return prList;
+        }
     }
 
+    public static class FindLowestPrice implements DAOProduct.CriteriaFunc {
+        private int lowestPrice = -1;
+        private Product result;
+
+        @Override
+        public void ProcessProduct(Product product){
+            if(result == null){
+                result = product;
+                return;
+            }
+
+            if(result.GetPrice() > product.GetPrice()){
+                result = product;
+            }
+        }
+
+        public Product GetResult(){
+            return result;
+        }
+    }
+
+    public static void main(String[] args) {
+        DAOProduct DAOproduct = new DAOProduct("products.xml");
+        var cr1 = new FindKettles();
+        var cr2 = new FindLowestPrice();
+        DAOproduct.FindProducts(cr1);
+        DAOproduct.FindProducts(cr2);
+        var result1 = cr1.GetResult();
+
+        var result2 = cr2.GetResult();
+    }
 }

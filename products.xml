@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <product type="kettle">
+        <price>10</price>
+        <name>bosch</name>
+        <capacity>15</capacity>
+    </product>
+    <product type="phone">
+        <price>7</price>
+        <name>caller Pro Max</name>
+        <diagonal>12</diagonal>
+        <color>blue</color>
+    </product>
+    <product type="kettle">
+        <price>13</price>
+        <name>iron</name>
+        <capacity>15</capacity>
+    </product>
+    <product type="oven">
+        <price>11</price>
+        <name>cooker</name>
+        <width>32</width>
+        <heigth>20</heigth>
+    </product>
+    <product type="phone">
+        <price>4</price>
+        <name>caller</name>
+        <diagonal>7</diagonal>
+        <color>blue</color>
+    </product>
+    <product type="kettle">
+        <price>10</price>
+        <name>heater</name>
+        <capacity>15</capacity>
+    </product>
+
+</root>
